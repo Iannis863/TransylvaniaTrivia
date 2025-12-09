@@ -3,9 +3,9 @@ import logoImage from "@assets/Logo_1765298445957.png";
 
 export default function HeroSection() {
   const handleJoinClick = () => {
-    const formatSection = document.getElementById("format");
-    if (formatSection) {
-      formatSection.scrollIntoView({ behavior: "smooth" });
+    const registerSection = document.getElementById("register");
+    if (registerSection) {
+      registerSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
