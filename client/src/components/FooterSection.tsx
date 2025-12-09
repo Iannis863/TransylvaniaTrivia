@@ -1,5 +1,5 @@
 import { MapPin, Clock, Users } from "lucide-react";
-import { SiInstagram, SiFacebook } from "react-icons/si";
+import { SiInstagram } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
 export default function FooterSection() {
@@ -19,21 +19,21 @@ export default function FooterSection() {
                 <MapPin className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium">Insomnia Restaurant</p>
-                  <p className="text-muted-foreground text-sm">Your favorite spot for food, drinks, and trivia</p>
+                  <p className="text-muted-foreground text-sm">Strada Universitatii nr 2</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium">Quiz Night Schedule</p>
-                  <p className="text-muted-foreground text-sm">Check our social media for upcoming dates!</p>
+                  <p className="font-medium">Every Tuesday at 20:00</p>
+                  <p className="text-muted-foreground text-sm">Don't be late - the quiz starts on time!</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Users className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium">Team Size</p>
-                  <p className="text-muted-foreground text-sm">Bring your best crew - the more brains, the better!</p>
+                  <p className="font-medium">Team Size: Max 5 People</p>
+                  <p className="text-muted-foreground text-sm">Gather your smartest friends!</p>
                 </div>
               </div>
             </div>
@@ -44,32 +44,27 @@ export default function FooterSection() {
               className="font-heading text-2xl tracking-wider mb-6 text-purple-400"
               data-testid="text-connect-title"
             >
-              CONNECT WITH US
+              FOLLOW US
             </h3>
             <p className="text-muted-foreground mb-6">
-              Follow us on social media for quiz night announcements, teasers, and behind-the-scenes fun!
+              Follow us on Instagram for quiz night announcements, teasers, and behind-the-scenes fun!
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="gap-2"
-                onClick={() => console.log("Instagram clicked")}
-                data-testid="button-instagram"
+              <a 
+                href="https://www.instagram.com/transylvaniatrivia/" 
+                target="_blank" 
+                rel="noopener noreferrer"
               >
-                <SiInstagram className="w-5 h-5" />
-                Instagram
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="gap-2"
-                onClick={() => console.log("Facebook clicked")}
-                data-testid="button-facebook"
-              >
-                <SiFacebook className="w-5 h-5" />
-                Facebook
-              </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="gap-2"
+                  data-testid="button-instagram"
+                >
+                  <SiInstagram className="w-5 h-5" />
+                  @transylvaniatrivia
+                </Button>
+              </a>
             </div>
           </div>
         </div>
