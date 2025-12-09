@@ -1,5 +1,5 @@
 import { MapPin, Clock, Users } from "lucide-react";
-import { SiInstagram } from "react-icons/si";
+import { SiInstagram, SiTiktok, SiFacebook } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
 export default function FooterSection() {
@@ -47,7 +47,7 @@ export default function FooterSection() {
               FOLLOW US
             </h3>
             <p className="text-muted-foreground mb-6">
-              Follow us on Instagram for quiz night announcements, teasers, and behind-the-scenes fun!
+              Follow us for quiz night announcements, teasers, and behind-the-scenes fun!
             </p>
             <div className="flex flex-wrap gap-3">
               <a 
@@ -62,7 +62,37 @@ export default function FooterSection() {
                   data-testid="button-instagram"
                 >
                   <SiInstagram className="w-5 h-5" />
-                  @transylvaniatrivia
+                  Instagram
+                </Button>
+              </a>
+              <a 
+                href="http://www.tiktok.com/@transylvania.triv" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="gap-2"
+                  data-testid="button-tiktok"
+                >
+                  <SiTiktok className="w-5 h-5" />
+                  TikTok
+                </Button>
+              </a>
+              <a 
+                href="https://www.facebook.com/profile.php?id=61584663009460&sfnsn=wa" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="gap-2"
+                  data-testid="button-facebook"
+                >
+                  <SiFacebook className="w-5 h-5" />
+                  Facebook
                 </Button>
               </a>
             </div>
