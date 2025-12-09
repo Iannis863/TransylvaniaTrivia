@@ -1,18 +1,22 @@
 import HeroSection from "@/components/HeroSection";
+import CountdownTimer from "@/components/CountdownTimer";
 import PrizesSection from "@/components/PrizesSection";
 import RulesSection from "@/components/RulesSection";
 import FormatSection from "@/components/FormatSection";
 import MechanicsSection from "@/components/MechanicsSection";
+import RegistrationForm from "@/components/RegistrationForm";
 import FooterSection from "@/components/FooterSection";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <HeroSection />
+      <CountdownTimer />
       <PrizesSection />
       <RulesSection />
       <FormatSection />
       <MechanicsSection />
+      <RegistrationForm />
       <FooterSection />
     </div>
   );
