@@ -81,7 +81,7 @@ export default function FooterSection() {
                 </Button>
               </a>
               <a 
-                href="https://www.facebook.com/profile.php?id=61584663009460&sfnsn=wa" 
+                href="https://www.facebook.com/share/1AXKd9KwTt/" 
                 target="_blank" 
                 rel="noopener noreferrer"
               >

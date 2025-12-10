@@ -103,8 +103,11 @@ export default function RegistrationForm() {
         >
           REGISTER YOUR TEAM
         </h2>
-        <p className="text-muted-foreground text-center mb-8">
+        <p className="text-muted-foreground text-center mb-4">
           Secure your spot for the next quiz night
+        </p>
+        <p className="text-amber-400 text-center mb-8 font-medium">
+          Entry Fee: 10 lei per person
         </p>
 
         <Card className="border border-purple-500/30">

@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Smartphone, Joystick, Coins, PartyPopper } from "lucide-react";
+import { Smartphone, Joystick, Coins, PartyPopper, Ticket } from "lucide-react";
 
 const rules = [
   {
@@ -38,9 +38,16 @@ export default function RulesSection() {
         >
           THE RULES
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
+        <p className="text-muted-foreground text-center mb-8 max-w-xl mx-auto">
           Simple rules for maximum fun
         </p>
+        
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-md bg-amber-500/10 border border-amber-500/30" data-testid="entry-fee-badge">
+            <Ticket className="w-6 h-6 text-amber-400" />
+            <span className="font-heading text-xl tracking-wide text-amber-400">ENTRY FEE: 10 LEI PER PERSON</span>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {rules.map((rule) => (

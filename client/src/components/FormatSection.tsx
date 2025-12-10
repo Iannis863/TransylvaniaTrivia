@@ -51,9 +51,9 @@ const rounds = [
   },
   {
     id: "round5",
-    name: "Difficulty Round",
-    description: "The toughest questions of the night. Separate the champions from the rest!",
-    icon: Skull,
+    name: "Thematic Round 2",
+    description: "Another themed topic to test your specialized knowledge. Double the themes, double the fun!",
+    icon: Target,
     questions: 10,
     color: "border-red-500/30",
     iconColor: "text-red-400",
