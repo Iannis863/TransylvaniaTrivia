@@ -66,7 +66,7 @@ export default function FooterSection() {
                 </Button>
               </a>
               <a 
-                href="http://www.tiktok.com/@transylvania.triv" 
+                href="https://www.tiktok.com/@transylvaniatrivia" 
                 target="_blank" 
                 rel="noopener noreferrer"
               >
