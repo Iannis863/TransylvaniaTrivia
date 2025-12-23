@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Smartphone, Joystick, Coins, PartyPopper, Ticket } from "lucide-react";
+import { Smartphone, Joystick, Coins, PartyPopper, Ticket, Trophy } from "lucide-react";
 
 const rules = [
   {
@@ -22,6 +22,12 @@ const rules = [
   },
   {
     number: 4,
+    title: "Last Place Picks",
+    description: "The team in last place gets to choose a theme round for next week!",
+    icon: Trophy,
+  },
+  {
+    number: 5,
     title: "Have Fun!",
     description: "This is all about having a great time with friends. Enjoy the competition!",
     icon: PartyPopper,
