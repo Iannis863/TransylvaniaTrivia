@@ -59,6 +59,16 @@ const rounds = [
     iconColor: "text-red-400",
   },
   {
+    id: "break2",
+    name: "Break Time",
+    description: "5 minutes to catch your breath before the final showdown!",
+    icon: Coffee,
+    questions: null,
+    color: "border-amber-500/30",
+    iconColor: "text-amber-400",
+    isBreak: true,
+  },
+  {
     id: "final",
     name: "Final Question Wager",
     description: "One impossibly hard question. Bet your points wisely - glory or doom awaits!",
