@@ -14,10 +14,100 @@ interface TeamRegistration {
   createdAt: string;
 }
 
+function getNextTuesday(date: Date): Date {
+  const result = new Date(date);
+  const dayOfWeek = result.getDay();
+  const daysUntilTuesday = dayOfWeek <= 2 ? 2 - dayOfWeek : 9 - dayOfWeek;
+  result.setDate(result.getDate() + daysUntilTuesday);
+  result.setHours(20, 0, 0, 0);
+  return result;
+}
+
+function getEventTuesday(registrationDate: Date): Date {
+  const regDate = new Date(registrationDate);
+  const dayOfWeek = regDate.getDay();
+  
+  if (dayOfWeek === 2) {
+    const eventTime = new Date(regDate);
+    eventTime.setHours(20, 0, 0, 0);
+    if (regDate < eventTime) {
+      return eventTime;
+    }
+  }
+  
+  return getNextTuesday(regDate);
+}
+
+function formatEventDate(date: Date): string {
+  return date.toLocaleDateString('en-US', { 
+    weekday: 'long',
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+
+function groupByEvent(registrations: TeamRegistration[]): Array<[string, TeamRegistration[]]> {
+  const groups = new Map<string, TeamRegistration[]>();
+  
+  registrations.forEach(reg => {
+    const eventDate = getEventTuesday(new Date(reg.createdAt));
+    const key = eventDate.toISOString().split('T')[0];
+    
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key)!.push(reg);
+  });
+  
+  const sortedGroups = Array.from(groups.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+  
+  return sortedGroups;
+}
+
+function TeamCard({ team }: { team: TeamRegistration }) {
+  return (
+    <Card className="border border-purple-500/30" data-testid={`card-team-${team.id}`}>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center justify-between gap-2 flex-wrap">
+          <span className="text-lg">{team.teamName}</span>
+          <span className="text-sm font-normal text-purple-400">
+            {team.memberCount} member{team.memberCount !== 1 ? "s" : ""}
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <div className="flex items-center gap-2 text-sm">
+          <Users className="w-4 h-4 text-cyan-400" />
+          <span>Captain: {team.captainName}</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <Mail className="w-4 h-4 text-cyan-400" />
+          <span>{team.email}</span>
+        </div>
+        {team.phoneNumber && (
+          <div className="flex items-center gap-2 text-sm">
+            <Phone className="w-4 h-4 text-cyan-400" />
+            <span>{team.phoneNumber}</span>
+          </div>
+        )}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Calendar className="w-4 h-4" />
+          <span>Registered: {new Date(team.createdAt).toLocaleDateString()}</span>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Admin() {
   const { data: registrations, isLoading } = useQuery<TeamRegistration[]>({
     queryKey: ["/api/registrations"],
   });
+
+  const groupedRegistrations = registrations ? groupByEvent(registrations) : [];
+  const upcomingTuesday = getNextTuesday(new Date());
+  const upcomingKey = upcomingTuesday.toISOString().split('T')[0];
 
   return (
     <div className="min-h-screen bg-background py-8 px-4">
@@ -48,45 +138,42 @@ export default function Admin() {
             </CardContent>
           </Card>
         ) : (
-          <>
-            <p className="text-muted-foreground mb-6" data-testid="text-team-count">
-              {registrations.length} team{registrations.length !== 1 ? "s" : ""} registered
-            </p>
-            <div className="space-y-4">
-              {registrations.map((team) => (
-                <Card key={team.id} className="border border-purple-500/30" data-testid={`card-team-${team.id}`}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center justify-between gap-2 flex-wrap">
-                      <span className="text-lg">{team.teamName}</span>
-                      <span className="text-sm font-normal text-purple-400">
-                        {team.memberCount} member{team.memberCount !== 1 ? "s" : ""}
+          <div className="space-y-12">
+            {groupedRegistrations.map(([dateKey, teams]) => {
+              const eventDate = new Date(dateKey + 'T20:00:00');
+              const isUpcoming = dateKey >= upcomingKey;
+              const isPast = dateKey < upcomingKey;
+              
+              return (
+                <div key={dateKey} data-testid={`event-section-${dateKey}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Calendar className={`w-5 h-5 ${isUpcoming ? 'text-green-400' : 'text-muted-foreground'}`} />
+                    <h2 className="font-heading text-xl tracking-wider">
+                      {isUpcoming ? 'UPCOMING: ' : ''}{formatEventDate(eventDate)}
+                    </h2>
+                    {isUpcoming && (
+                      <span className="text-xs px-2 py-1 rounded bg-green-500/20 text-green-400 border border-green-500/30">
+                        This Week
                       </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm">
-                      <Users className="w-4 h-4 text-cyan-400" />
-                      <span>Captain: {team.captainName}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Mail className="w-4 h-4 text-cyan-400" />
-                      <span>{team.email}</span>
-                    </div>
-                    {team.phoneNumber && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="w-4 h-4 text-cyan-400" />
-                        <span>{team.phoneNumber}</span>
-                      </div>
                     )}
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Calendar className="w-4 h-4" />
-                      <span>Registered: {new Date(team.createdAt).toLocaleDateString()}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </>
+                    {isPast && (
+                      <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">
+                        Past Event
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    {teams.length} team{teams.length !== 1 ? "s" : ""} registered
+                  </p>
+                  <div className="space-y-4">
+                    {teams.map((team: TeamRegistration) => (
+                      <TeamCard key={team.id} team={team} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </div>
