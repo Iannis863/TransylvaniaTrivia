@@ -1,4 +1,4 @@
-import { MapPin, Clock, Users } from "lucide-react";
+import { MapPin, Clock, Users, Mail } from "lucide-react";
 import { SiInstagram, SiTiktok, SiFacebook, SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
@@ -109,6 +109,18 @@ export default function FooterSection() {
                   <SiWhatsapp className="w-5 h-5" />
                   WhatsApp
                 </Button>
+              </a>
+            </div>
+            
+            <div className="flex items-center gap-2 mt-6 text-muted-foreground">
+              <Mail className="w-4 h-4" />
+              <span>Contact us at </span>
+              <a 
+                href="mailto:contact@transylvaniatrivia.com" 
+                className="text-purple-400 hover:underline"
+                data-testid="link-email"
+              >
+                contact@transylvaniatrivia.com
               </a>
             </div>
           </div>
