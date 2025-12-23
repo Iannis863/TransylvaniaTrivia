@@ -5,7 +5,7 @@ import { Wine, Beer, Sparkles } from "lucide-react";
 const prizes = [
   {
     place: "1st",
-    title: "Champagne Bottle",
+    title: "Wine Bottle",
     description: "Pop the bubbly and celebrate your victory!",
     icon: Wine,
     color: "text-yellow-400",
