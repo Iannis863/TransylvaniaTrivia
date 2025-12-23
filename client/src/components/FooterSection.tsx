@@ -32,7 +32,7 @@ export default function FooterSection() {
               <div className="flex items-start gap-3">
                 <Users className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium">Team Size: Max 5 People</p>
+                  <p className="font-medium">Team Size: Max 6 People</p>
                   <p className="text-muted-foreground text-sm">Gather your smartest friends!</p>
                 </div>
               </div>

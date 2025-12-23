@@ -31,7 +31,7 @@ const registrationSchema = z.object({
   captainName: z.string().min(2, "Captain name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phoneNumber: z.string().optional(),
-  memberCount: z.number().min(1, "At least 1 member required").max(5, "Maximum 5 members allowed"),
+  memberCount: z.number().min(1, "At least 1 member required").max(6, "Maximum 6 members allowed"),
 });
 
 type RegistrationFormData = z.infer<typeof registrationSchema>;
@@ -214,7 +214,8 @@ export default function RegistrationForm() {
                           <SelectItem value="2">2 Members</SelectItem>
                           <SelectItem value="3">3 Members</SelectItem>
                           <SelectItem value="4">4 Members</SelectItem>
-                          <SelectItem value="5">5 Members (Max)</SelectItem>
+                          <SelectItem value="5">5 Members</SelectItem>
+                          <SelectItem value="6">6 Members (Max)</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
