@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import CountdownTimer from "@/components/CountdownTimer";
 import PrizesSection from "@/components/PrizesSection";
+import JackpotSection from "@/components/JackpotSection";
 import RulesSection from "@/components/RulesSection";
 import FormatSection from "@/components/FormatSection";
 import MechanicsSection from "@/components/MechanicsSection";
@@ -13,6 +14,7 @@ export default function Home() {
       <HeroSection />
       <CountdownTimer />
       <PrizesSection />
+      <JackpotSection />
       <RulesSection />
       <FormatSection />
       <MechanicsSection />
