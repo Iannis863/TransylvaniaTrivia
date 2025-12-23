@@ -59,14 +59,14 @@ export default function RulesSection() {
           {rules.map((rule) => (
             <Card 
               key={rule.number}
-              className="border border-border"
+              className={`border border-border ${rule.number === 5 ? 'md:col-span-2' : ''}`}
               data-testid={`card-rule-${rule.number}`}
             >
-              <CardContent className="p-6 flex gap-5">
+              <CardContent className={`p-6 flex gap-5 ${rule.number === 5 ? 'justify-center' : ''}`}>
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
                   <span className="font-heading text-xl text-purple-400">{rule.number}</span>
                 </div>
-                <div className="flex-1">
+                <div className={rule.number === 5 ? '' : 'flex-1'}>
                   <div className="flex items-center gap-2 mb-2">
                     <rule.icon className="w-5 h-5 text-cyan-400" />
                     <h3 className="font-heading text-xl tracking-wide">{rule.title}</h3>
