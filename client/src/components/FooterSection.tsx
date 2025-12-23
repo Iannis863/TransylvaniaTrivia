@@ -1,5 +1,5 @@
 import { MapPin, Clock, Users } from "lucide-react";
-import { SiInstagram, SiTiktok, SiFacebook } from "react-icons/si";
+import { SiInstagram, SiTiktok, SiFacebook, SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
 export default function FooterSection() {
@@ -93,6 +93,21 @@ export default function FooterSection() {
                 >
                   <SiFacebook className="w-5 h-5" />
                   Facebook
+                </Button>
+              </a>
+              <a 
+                href="https://wa.me/40721316695" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="gap-2"
+                  data-testid="button-whatsapp"
+                >
+                  <SiWhatsapp className="w-5 h-5" />
+                  WhatsApp
                 </Button>
               </a>
             </div>
