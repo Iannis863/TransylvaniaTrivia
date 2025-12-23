@@ -61,7 +61,7 @@ const rounds = [
   {
     id: "break2",
     name: "Break Time",
-    description: "5 minutes to catch your breath before the final showdown!",
+    description: "15 minutes to catch your breath before the final showdown!",
     icon: Coffee,
     questions: null,
     color: "border-amber-500/30",
