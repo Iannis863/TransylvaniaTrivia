@@ -4,7 +4,6 @@ import PrizesSection from "@/components/PrizesSection";
 import JackpotSection from "@/components/JackpotSection";
 import RulesSection from "@/components/RulesSection";
 import FormatSection from "@/components/FormatSection";
-import MechanicsSection from "@/components/MechanicsSection";
 import RegistrationForm from "@/components/RegistrationForm";
 import FooterSection from "@/components/FooterSection";
 
@@ -17,7 +16,6 @@ export default function Home() {
       <JackpotSection />
       <RulesSection />
       <FormatSection />
-      <MechanicsSection />
       <RegistrationForm />
       <FooterSection />
     </div>

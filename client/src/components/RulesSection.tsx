@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Smartphone, Joystick, Coins, PartyPopper, Ticket, Trophy } from "lucide-react";
+import { Smartphone, Joystick, Coins, PartyPopper, Ticket, Trophy, RefreshCw } from "lucide-react";
 
 const rules = [
   {
@@ -22,12 +22,18 @@ const rules = [
   },
   {
     number: 4,
+    title: "Swap & Mark",
+    description: "Teams write answers on paper, then swap sheets with neighbors to check. Swap back to verify, then submit before the break.",
+    icon: RefreshCw,
+  },
+  {
+    number: 5,
     title: "Last Place Picks",
     description: "The team in last place gets to choose a theme round for next week!",
     icon: Trophy,
   },
   {
-    number: 5,
+    number: 6,
     title: "Have Fun!",
     description: "This is all about having a great time with friends. Enjoy the competition!",
     icon: PartyPopper,
@@ -59,14 +65,14 @@ export default function RulesSection() {
           {rules.map((rule) => (
             <Card 
               key={rule.number}
-              className={`border border-border ${rule.number === 5 ? 'md:col-span-2' : ''}`}
+              className={`border border-border ${rule.number === 6 ? 'md:col-span-2' : ''}`}
               data-testid={`card-rule-${rule.number}`}
             >
-              <CardContent className={`p-6 flex gap-5 ${rule.number === 5 ? 'justify-center' : ''}`}>
+              <CardContent className={`p-6 flex gap-5 ${rule.number === 6 ? 'justify-center' : ''}`}>
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
                   <span className="font-heading text-xl text-purple-400">{rule.number}</span>
                 </div>
-                <div className={rule.number === 5 ? '' : 'flex-1'}>
+                <div className={rule.number === 6 ? '' : 'flex-1'}>
                   <div className="flex items-center gap-2 mb-2">
                     <rule.icon className="w-5 h-5 text-cyan-400" />
                     <h3 className="font-heading text-xl tracking-wide">{rule.title}</h3>
