@@ -35,7 +35,7 @@ export const insertTeamRegistrationSchema = createInsertSchema(teamRegistrations
   captainName: z.string().min(2, "Captain name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phoneNumber: z.string().optional(),
-  memberCount: z.number().min(1, "At least 1 member required").max(5, "Maximum 5 members allowed"),
+  memberCount: z.number().min(1, "At least 1 member required").max(6, "Maximum 6 members allowed"),
 });
 
 export type InsertTeamRegistration = z.infer<typeof insertTeamRegistrationSchema>;
