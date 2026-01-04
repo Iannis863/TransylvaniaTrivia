@@ -80,7 +80,7 @@ export async function sendRegistrationConfirmation(
           
           <div style="background-color: #2d2d44; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #22d3ee; margin-top: 0;">Event Details:</h3>
-            <p style="margin: 5px 0;"><strong>When:</strong> Every Tuesday at 20:00</p>
+            <p style="margin: 5px 0;"><strong>When:</strong> Next Tuesday at 20:00</p>
             <p style="margin: 5px 0;"><strong>Where:</strong> Insomnia Restaurant, Strada Universitatii nr 2, Cluj-Napoca</p>
           </div>
           
