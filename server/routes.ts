@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertTeamRegistrationSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import { sendRegistrationConfirmation } from "./email";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -14,6 +15,15 @@ export async function registerRoutes(
     try {
       const data = insertTeamRegistrationSchema.parse(req.body);
       const registration = await storage.createTeamRegistration(data);
+      
+      // Send confirmation email (don't block the response)
+      sendRegistrationConfirmation(
+        data.email,
+        data.teamName,
+        data.captainName,
+        data.memberCount
+      ).catch(err => console.error("Failed to send confirmation email:", err));
+      
       res.status(201).json(registration);
     } catch (error) {
       if (error instanceof ZodError) {
