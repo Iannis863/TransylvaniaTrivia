@@ -46,5 +46,20 @@ export async function registerRoutes(
     }
   });
 
+  app.delete("/api/registrations/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await storage.deleteTeamRegistration(id);
+      if (deleted) {
+        res.status(200).json({ message: "Team deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Team not found" });
+      }
+    } catch (error) {
+      console.error("Delete registration error:", error);
+      res.status(500).json({ message: "Failed to delete team" });
+    }
+  });
+
   return httpServer;
 }

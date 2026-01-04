@@ -1,6 +1,7 @@
 import { type User, type InsertUser, type TeamRegistration, type InsertTeamRegistration, teamRegistrations } from "@shared/schema";
 import { db } from "./db";
 import { randomUUID } from "crypto";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -8,6 +9,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createTeamRegistration(registration: InsertTeamRegistration): Promise<TeamRegistration>;
   getTeamRegistrations(): Promise<TeamRegistration[]>;
+  deleteTeamRegistration(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -51,6 +53,14 @@ export class MemStorage implements IStorage {
   async getTeamRegistrations(): Promise<TeamRegistration[]> {
     return Array.from(this.registrations.values());
   }
+
+  async deleteTeamRegistration(id: string): Promise<boolean> {
+    if (this.registrations.has(id)) {
+      this.registrations.delete(id);
+      return true;
+    }
+    return false;
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -73,6 +83,11 @@ export class DatabaseStorage implements IStorage {
 
   async getTeamRegistrations(): Promise<TeamRegistration[]> {
     return await db.select().from(teamRegistrations);
+  }
+
+  async deleteTeamRegistration(id: string): Promise<boolean> {
+    const result = await db.delete(teamRegistrations).where(eq(teamRegistrations.id, id)).returning();
+    return result.length > 0;
   }
 }
 

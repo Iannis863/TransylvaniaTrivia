@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Users, Mail, Phone, Calendar, ArrowLeft } from "lucide-react";
+import { Users, Mail, Phone, Calendar, ArrowLeft, Trash2 } from "lucide-react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface TeamRegistration {
   id: number;
@@ -66,14 +68,53 @@ function groupByEvent(registrations: TeamRegistration[]): Array<[string, TeamReg
 }
 
 function TeamCard({ team }: { team: TeamRegistration }) {
+  const { toast } = useToast();
+  
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      await apiRequest("DELETE", `/api/registrations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/registrations"] });
+      toast({
+        title: "Team deleted",
+        description: `${team.teamName} has been removed.`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete team. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDelete = () => {
+    if (confirm(`Are you sure you want to delete ${team.teamName}?`)) {
+      deleteMutation.mutate(String(team.id));
+    }
+  };
+
   return (
     <Card className="border border-purple-500/30" data-testid={`card-team-${team.id}`}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center justify-between gap-2 flex-wrap">
           <span className="text-lg">{team.teamName}</span>
-          <span className="text-sm font-normal text-purple-400">
-            {team.memberCount} member{team.memberCount !== 1 ? "s" : ""}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-normal text-purple-400">
+              {team.memberCount} member{team.memberCount !== 1 ? "s" : ""}
+            </span>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              data-testid={`button-delete-team-${team.id}`}
+            >
+              <Trash2 className="w-4 h-4 text-destructive" />
+            </Button>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
