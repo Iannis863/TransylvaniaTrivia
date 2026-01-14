@@ -26,36 +26,42 @@ async function sendTodayReminders() {
   const now = new Date();
   const today = now.toISOString().split('T')[0];
   
-  if (lastReminderDate === today) {
-    console.log('[Scheduler] Reminders already sent today, skipping...');
-    return;
-  }
-  
-  console.log(`[Scheduler] Sending reminder emails for quiz night on ${today}...`);
+  console.log(`[Scheduler] Checking for reminder emails to send for ${today}...`);
   
   try {
     const allRegistrations = await storage.getTeamRegistrations();
     
     const todayTeams = allRegistrations.filter(reg => {
+      if (reg.reminderSent) return false;
       const eventDate = getEventTuesday(new Date(reg.createdAt));
       const eventKey = eventDate.toISOString().split('T')[0];
       return eventKey === today;
     });
     
-    console.log(`[Scheduler] Found ${todayTeams.length} teams registered for today's quiz`);
+    if (todayTeams.length === 0) {
+      console.log('[Scheduler] No teams need reminders today');
+      return;
+    }
+    
+    console.log(`[Scheduler] Sending reminders to ${todayTeams.length} teams`);
     
     for (const team of todayTeams) {
-      await sendReminderEmail(
+      const result = await sendReminderEmail(
         team.email,
         team.teamName,
         team.captainName,
         team.memberCount
       );
+      
+      if (result.success) {
+        await storage.markReminderSent(team.id);
+        console.log(`[Scheduler] Reminder sent and marked for team: ${team.teamName}`);
+      }
+      
       await new Promise(resolve => setTimeout(resolve, 500));
     }
     
-    lastReminderDate = today;
-    console.log(`[Scheduler] Finished sending ${todayTeams.length} reminder emails`);
+    console.log(`[Scheduler] Finished sending reminder emails`);
   } catch (error) {
     console.error('[Scheduler] Error sending reminder emails:', error);
   }

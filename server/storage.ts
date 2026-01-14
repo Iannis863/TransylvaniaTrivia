@@ -10,6 +10,7 @@ export interface IStorage {
   createTeamRegistration(registration: InsertTeamRegistration): Promise<TeamRegistration>;
   getTeamRegistrations(): Promise<TeamRegistration[]>;
   deleteTeamRegistration(id: string): Promise<boolean>;
+  markReminderSent(id: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -45,6 +46,7 @@ export class MemStorage implements IStorage {
       id,
       phoneNumber: registration.phoneNumber || null,
       createdAt: new Date(),
+      reminderSent: false,
     };
     this.registrations.set(id, newRegistration);
     return newRegistration;
@@ -60,6 +62,13 @@ export class MemStorage implements IStorage {
       return true;
     }
     return false;
+  }
+
+  async markReminderSent(id: string): Promise<void> {
+    const reg = this.registrations.get(id);
+    if (reg) {
+      reg.reminderSent = true;
+    }
   }
 }
 
@@ -88,6 +97,10 @@ export class DatabaseStorage implements IStorage {
   async deleteTeamRegistration(id: string): Promise<boolean> {
     const result = await db.delete(teamRegistrations).where(eq(teamRegistrations.id, id)).returning();
     return result.length > 0;
+  }
+
+  async markReminderSent(id: string): Promise<void> {
+    await db.update(teamRegistrations).set({ reminderSent: true }).where(eq(teamRegistrations.id, id));
   }
 }
 

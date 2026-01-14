@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -25,11 +25,13 @@ export const teamRegistrations = pgTable("team_registrations", {
   phoneNumber: text("phone_number"),
   memberCount: integer("member_count").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  reminderSent: boolean("reminder_sent").default(false).notNull(),
 });
 
 export const insertTeamRegistrationSchema = createInsertSchema(teamRegistrations).omit({
   id: true,
   createdAt: true,
+  reminderSent: true,
 }).extend({
   teamName: z.string().min(2, "Team name must be at least 2 characters"),
   captainName: z.string().min(2, "Captain name must be at least 2 characters"),
