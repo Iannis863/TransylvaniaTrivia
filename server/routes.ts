@@ -1,10 +1,10 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./storage.js";
 import { insertTeamRegistrationSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
-import { sendRegistrationConfirmation } from "./email";
+import { sendRegistrationConfirmation } from "./email.js";
 
 export async function registerRoutes(
   httpServer: Server,
