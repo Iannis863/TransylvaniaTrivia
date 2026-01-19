@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // The "Intelligence" Check: Determine the 'From' email
 // Use your verified domain if you have one, otherwise Resend's testing address
-const FROM_EMAIL = 'Transylvania Trivia <onboarding@resend.dev>';
+const FROM_EMAIL = 'Transylvania Trivia <contact@transylvaniatrivia.com>';
 
 export async function sendReminderEmail(
   toEmail: string,
