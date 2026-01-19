@@ -12,10 +12,15 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  // Ensure URL starts with a slash for Vercel routing
+  const fetchUrl = url.startsWith("/") ? url : `/${url}`;
+  
+  const res = await fetch(fetchUrl, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
+    // Using "same-origin" is the high-society standard for Vercel deployments
+    // to avoid CORS "Pending" hangs.
     credentials: "same-origin",
   });
 
@@ -24,13 +29,17 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
-      credentials: "include",
+    const path = queryKey.join("/");
+    const fetchUrl = path.startsWith("/") ? path : `/${path}`;
+    
+    const res = await fetch(fetchUrl, {
+      credentials: "same-origin",
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
