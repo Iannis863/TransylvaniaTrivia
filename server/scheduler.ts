@@ -1,5 +1,5 @@
-import { storage } from "./storage";
-import { sendReminderEmail } from "./email";
+import { storage } from "./storage.js";
+import { sendReminderEmail } from "./email,js";
 
 function getEventTuesday(registrationDate: Date): Date {
   const regDate = new Date(registrationDate);
