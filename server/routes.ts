@@ -1,7 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
-import { insertTeamRegistrationSchema } from "@shared/schema";
+// CHANGE: Point to the physical file relative to the server folder
+import { insertTeamRegistrationSchema } from "../shared/schema.js"; 
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { sendRegistrationConfirmation } from "./email.js";
