@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type TeamRegistration, type InsertTeamRegistration, teamRegistrations } from "@shared/schema";
+import { type User, type InsertUser, type TeamRegistration, type InsertTeamRegistration, teamRegistrations } from "../shared/schema.js";
 import { db } from "./db.js";
 import { randomUUID } from "crypto";
 import { eq } from "drizzle-orm";
