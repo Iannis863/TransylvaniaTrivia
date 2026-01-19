@@ -1,5 +1,5 @@
 import { type User, type InsertUser, type TeamRegistration, type InsertTeamRegistration, teamRegistrations } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./db.js";
 import { randomUUID } from "crypto";
 import { eq } from "drizzle-orm";
 
