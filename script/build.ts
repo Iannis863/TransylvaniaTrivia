@@ -2,8 +2,6 @@ import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
 import { rm, readFile } from "fs/promises";
 
-// server deps to bundle to reduce openat(2) syscalls
-// which helps cold start times
 const allowlist = [
   "@google/generative-ai",
   "axios",
@@ -47,11 +45,12 @@ async function buildAll() {
   const externals = allDeps.filter((dep) => !allowlist.includes(dep));
 
   await esbuild({
-    entryPoints: ["server/index.ts"],
+    // THE INTELLIGENCE: Point to the new api entry point
+    entryPoints: ["api/index.js"], 
     platform: "node",
     bundle: true,
-    format: "cjs",
-    outfile: "dist/index.cjs",
+    format: "esm", // Use ESM for modern Vercel compatibility
+    outfile: "dist/index.js", // Matching the .js extension
     define: {
       "process.env.NODE_ENV": '"production"',
     },
