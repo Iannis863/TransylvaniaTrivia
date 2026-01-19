@@ -17,13 +17,21 @@ export async function registerRoutes(
       const data = insertTeamRegistrationSchema.parse(req.body);
       const registration = await storage.createTeamRegistration(data);
       
-      // Send confirmation email (don't block the response)
-      sendRegistrationConfirmation(
-        data.email,
-        data.teamName,
-        data.captainName,
-        data.memberCount
-      ).catch(err => console.error("Failed to send confirmation email:", err));
+      // THE "SMOOTH PROFESSIONAL" FIX: 
+      // We MUST await this on Vercel/Serverless or the function will
+      // terminate before the email actually leaves the outgoing queue.
+      try {
+        await sendRegistrationConfirmation(
+          data.email,
+          data.teamName,
+          data.captainName,
+          data.memberCount
+        );
+      } catch (emailErr) {
+        // We log the error but still return the registration success
+        // to the user so they aren't stuck on "Registering..."
+        console.error("Failed to send confirmation email:", emailErr);
+      }
       
       res.status(201).json(registration);
     } catch (error) {
